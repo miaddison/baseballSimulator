@@ -20,6 +20,7 @@ int main()
     int temp = 0;       //temp variable to hold team choice input to be converted to vector value
     int hometeam = 0;   //holds input for hometeam choice
     int awayteam = 0;   //holds input for awayteam choice
+    int count = 0;      //count variable for selection of awayteam
     
     /*string team_a = "team A";
     string team_b = "team B";
@@ -55,7 +56,8 @@ int main()
     //Output all teams skipping chosen hometeam
     for(int x = 0; x<teams.size(); x++){
         if(x != hometeam){
-            cout<< x + 1 << ". " << teams[x] << endl;
+            count++;
+            cout<< count << ". " << teams[x] << endl;
         }
       	//I want to work on this to find a way to display numbers correctly to user but still retreive correct index based on user input	
     }
@@ -64,8 +66,11 @@ int main()
     cin >> temp;
     
     //Convert input to vector index
-    awayteam = temp - 1;
-    
+    if(temp>hometeam) {    //corrects for user number one start versus vector zero start
+        awayteam = temp;
+    }else{
+        awayteam = temp - 1; //corrects for user and vector start and then for the vector index skipped for hometeam
+    }
 	//Output choice
     cout<< "You chose the " << teams[awayteam] << " as your awayteam."<< endl;
     
