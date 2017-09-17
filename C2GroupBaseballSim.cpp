@@ -59,7 +59,6 @@ int main()
             count++;
             cout<< count << ". " << teams[x] << endl;
         }
-      	//I want to work on this to find a way to display numbers correctly to user but still retreive correct index based on user input	
     }
     
     //Take in input for awayteam choice
