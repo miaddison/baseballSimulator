@@ -1,9 +1,16 @@
-// generalasPossible.cpp : Defines the entry point for the console application.
-//
+/* Advanced C++ Group project by
+    Merna Addison
+    Brian Burk
+    Ismael Ramirez
+    James Robbins
+    
+    9/5/17 - 10/17/17
+    This program will create a simulated baseball game predicting the outcome of two selected teams 
+    playing against each other.
+*/
 
 #include <iostream>
 #include <stdlib.h>
-//#include <time.h>
 #include <vector>
 using namespace std;
 
@@ -21,17 +28,6 @@ int main()
     int hometeam = 0;   //holds input for hometeam choice
     int awayteam = 0;   //holds input for awayteam choice
     int count = 0;      //count variable for selection of awayteam
-    
-    /*string team_a = "team A";
-    string team_b = "team B";
-    double team_a_era;
-	double team_b_era;
-	srand (time(NULL));
-
-	team_a_era = determineEra();
-	cout << "team a era: " << team_a_era << endl;
-	team_b_era = determineEra();
-	cout << "team b era: " << team_b_era << endl;*/
     
     //Output directions
     cout<<"Please choose your hometeam:"<<endl;
@@ -76,20 +72,6 @@ int main()
     determineGameWinner(hometeam, awayteam);
     return 0;
 }
-
-/*double determineEra(){
-	double r = ((double) rand() / RAND_MAX);
-	return r;
-}*/
-
-/*void determineGameWinner(double teama, double teamb){
-    if (teama < teamb){
-        cout << "Team A wins!" << endl;
-    }
-    else {
-        cout << "Team B wins!" << endl;
-    }
-}*/
 
 //Function to determine the winner based on era
 void determineGameWinner(double hometeam, double awayteam){
