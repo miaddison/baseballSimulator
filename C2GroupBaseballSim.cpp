@@ -21,7 +21,7 @@ void determineGameWinner (string teamName, double teama, string teamNameb, doubl
 
 //Global Variables
 vector<string>teams = {"Chicago Cubs", "Cincinnati Reds", "Milwaukee Brewers", "Pittsburgh Pirates", "St.Louis Cardinals"};    // vector with team names
-vector<double>eras = {5.00, 5.01, 5.02, 5.03, 5.04};   //vector with eras
+vector<double>eras = {4.08, 5.25, 4.04, 4.27, 3.86};   //vector with eras
 
 int main()
 { 
@@ -126,17 +126,17 @@ int main()
 void determineGameWinner(string hometeam, double hometeamERA, string awayteam, double awayteamERA)
 {
 	srand((unsigned)time(0));
-	double v1 = rand() % 100; 
-	v1 = v1 / 100;
-    if((hometeamERA + v1) > awayteamERA)
+	double HomeTeamADV = rand() % 100; 
+	HomeTeamADV = HomeTeamADV / 100;
+    if((hometeamERA + HomeTeamADV) > awayteamERA)
 	{
-		cout << "The " << hometeam << " win! with an era of: " << hometeamERA + v1 << endl;
+		cout << "The " << hometeam << " win! with an era of: " << hometeamERA + HomeTeamADV << endl;
 		cout << "The " << awayteam << " Lose! with an era of: " << awayteamERA << endl;
 	}
 	else 
 	{
 		cout << "The " << awayteam << " win! with an era of: " << awayteamERA << endl;
-		cout << "The " << hometeam << " Lose! with an era of: " << hometeamERA + v1 << endl;
+		cout << "The " << hometeam << " Lose! with an era of: " << hometeamERA + HomeTeamADV << endl;
 	}
 }
 
