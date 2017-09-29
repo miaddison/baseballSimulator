@@ -1,7 +1,7 @@
 /* Advanced C++ Group project by
     Merna Addison   merna.addison@gmail.com
     Brian Burk
-    Ismael Ramirez1  
+    Ismael Ramirez 
     James Robbins
     
     9/5/17 - 10/17/17
@@ -84,7 +84,7 @@ int main()
         cout << "Name: " << team[i].teamName << " Era: " << team[i].teamEra << endl;
     }*/
 
-    while(temp < 1 || temp > ARRAY_SIZE){
+    do{
         //Output directions
         cout<<"Please choose your hometeam:"<<endl;
     
@@ -100,7 +100,7 @@ int main()
         if(temp < 1 || temp > ARRAY_SIZE){
             cout << "Please choose team number 1 through " << ARRAY_SIZE << "." << endl;
         }
-    }
+    }while(temp < 1 || temp > ARRAY_SIZE);
     
     //Convert input to vector index
     hometeam = temp - 1;
@@ -111,7 +111,7 @@ int main()
     //testing
     //cout << team[hometeam].teamName << team[hometeam].teamEra <<endl;
     
-    while(temp < 1 || temp > (ARRAY_SIZE-1)){
+    do{
         //output directions for awayteam
         cout << "Please choose your awayteam:"<<endl;
     
@@ -131,7 +131,7 @@ int main()
         if(temp < 1 || temp > (ARRAY_SIZE-1)){
             cout << "Please choose team number 1 through " << (ARRAY_SIZE-1)<< "." << endl;
         }
-    }
+    }while(temp < 1 || temp > (ARRAY_SIZE-1));
     
     //Convert input to vector index
     if(temp>hometeam) {    //corrects for user number one start versus vector zero start
@@ -146,14 +146,14 @@ int main()
     //cout << team[awayteam].teamName << team[awayteam].teamEra <<endl;
     
     // Pass home and away teams into method to determine winner based on team era
-    determineGameWinner(team[hometeam], team[awayteam]);
+    determineGameWinner(team[hometeam], team[awayteam] /*, homeAdvantage*/);
     
     return 0;
 }
 
 //Function to determine the winner based on era
-void determineGameWinner(struct team home, struct team away){
-    if (home.teamEra < away.teamEra){
+void determineGameWinner(struct team home, struct team away /*,homeAdv*/){
+    if (home.teamEra /*+ homeAdv*/ < away.teamEra){
 		cout << "The " << home.teamName << " win!" << endl;
 	}
 	else {
