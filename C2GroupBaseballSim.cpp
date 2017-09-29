@@ -51,6 +51,7 @@ int main()
     // Open files
     inTeamData.open("TeamData.csv");
     
+    // Read file into tempArray
     if(inTeamData.is_open()){
         while(getline(inTeamData, input)){
             stringstream ss(input);
@@ -144,6 +145,7 @@ int main()
     //testing
     //cout << team[awayteam].teamName << team[awayteam].teamEra <<endl;
     
+    // Pass home and away teams into method to determine winner based on team era
     determineGameWinner(team[hometeam], team[awayteam]);
     
     return 0;
