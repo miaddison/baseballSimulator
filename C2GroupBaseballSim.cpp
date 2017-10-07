@@ -22,7 +22,6 @@ const int ARRAY_SIZE = 5;  // Array size
 
 // Struct for team values
 struct team{
-    //string leagueName;
     string teamName;
     double teamEra;
     double pitcherEra;
@@ -42,55 +41,48 @@ try
     ifstream inTeamData;
     
     // Variables
-    int temp = 0;       //temp variable to hold team choice input to be converted to vector value
-    int hometeam = 0;   //holds input for hometeam choice
-    int awayteam = 0;   //holds input for awayteam choice
-    int count = 0;      //count variable for selection of awayteam
-    char again;   // user input on whether they would like to play again
-    string input;       // for reading in input from file
-    string newline = "\n";  // for reading in input from file
-    bool valid = false;  //validates input for type
+    int teamNum = 0;       //variable to hold team choice input to be converted to vector value
+    int hometeam = 0;       //holds input for hometeam choice
+    int awayteam = 0;       //holds input for awayteam choice
+    int count = 0;          //count variable for selection of awayteam
+    string input = "";      // for taking in input
+    bool valid = false;     //validates input for type
     bool playAgain = false; // Allows user to play again
-    vector<string>tempArray;
-
     
     // Open files
     inTeamData.open("TeamData.csv");
     
-    // Read file into tempArray
+    // Read file into struct array
     if(inTeamData.is_open()){
-        while(getline(inTeamData, input)){
-            stringstream ss(input);
-            while(getline(ss, input, ',')){
-                tempArray.push_back(input);
+        while(inTeamData.good()){
+            for(int i = 0; i < ARRAY_SIZE; i++){
+                getline(inTeamData,input);
+                stringstream ss(input);
+                getline(ss, input, ',');
+                //team[i].leagueName = input;
+                team[i].teamName = input;
+                getline(ss, input, ',');
+                team[i].teamEra = atof(input.c_str());
+                getline(ss, input, ',');
+                team[i].pitcherEra = atof(input.c_str());
+                getline(ss, input, ',');
+                team[i].player1BatAvg = atof(input.c_str());
+                getline(ss, input, ',');
+                team[i].player2BatAvg = atof(input.c_str());
+                getline(ss, input, ',');
+                team[i].player3BatAvg = atof(input.c_str());
             }
         }
     }
-    
-    
-    // Testing file into tempArray
-    /*for(int i = 0; i < tempArray.size(); i++){
-        cout << tempArray[i] << endl;
-    }*/
-    
-    // tempArray into Team
-    count = 0;
-    for(int i = 0; i < ARRAY_SIZE; i++){
-        //team[i].leagueName = tempArray[count++];
-        team[i].teamName = tempArray[count++];
-        team[i].teamEra = atof(tempArray[count++].c_str());
-        team[i].pitcherEra = atof(tempArray[count++].c_str());
-        team[i].player1BatAvg = atof(tempArray[count++].c_str());
-        team[i].player2BatAvg = atof(tempArray[count++].c_str());
-        team[i].player3BatAvg = atof(tempArray[count++].c_str());
-    }
 
-    // Testing for teampArray into Team
+    // Testing for data into Team
     /*for(int i=0; i < ARRAY_SIZE; i++){
         cout << "Name: " << team[i].teamName << "\nTeam Era: " << team[i].teamEra
              << "\nPitcher ERA: " << team[i].pitcherEra << "\nPlayer1 BA: " << team[i].player1BatAvg << "\nPlayer2 BA: "
              << team[i].player2BatAvg << "\nPlayer3 BA: " << team[i].player3BatAvg << "\n-----------------------" <<endl;
     }*/
+    
+    // Main loop for game
     do{
         // Loop to select hometeam with user validation
         do{
@@ -103,29 +95,29 @@ try
             }
         
             // Take in input for hometeam choice and check that input is right type
-            if(cin >> temp){
+            if(cin >> teamNum){
                 cin.ignore();
                 //cout << "valid input type" << endl; //testing input type
                 // input is valid
                 valid = true;
             
                 // Check input within correct range
-                if(temp < 1 || temp > ARRAY_SIZE){
+                if(teamNum < 1 || teamNum > ARRAY_SIZE){
                     //cout << "input out of range" << endl;   // testing input range
                     cout << "Please choose team number 1 through " << ARRAY_SIZE << "." << endl;
                 }
             }else{
-                //cout << "input not valid" << endl; //testing input type
                 clearInput();
+                //cout << "input not valid" << endl; //testing input type
                 cout << "Please choose team number 1 through " << ARRAY_SIZE << "." << endl;
             }
-        }while(temp < 1 || temp > ARRAY_SIZE || !valid); //end loop for hometeam
+        }while(teamNum < 1 || teamNum > ARRAY_SIZE || !valid); //end loop for hometeam
         
         // Reset valid to false so next user input can be validated for type
         valid = false;
     
         //Convert input to vector index
-        hometeam = temp - 1;
+        hometeam = teamNum - 1;
     
         //Output choice
         cout<< "You chose the " << team[hometeam].teamName << " as your hometeam."<< endl;
@@ -148,29 +140,29 @@ try
             }
     
             // Take in input for hometeam choice and check that input is right type
-            if(cin >> temp){
+            if(cin >> teamNum){
                 cin.ignore();
                 // input is valid
                 valid = true;
                 //cout << "valid input type" << endl; //testing input type
             
                 // Check input range
-                if(temp < 1 || temp > (ARRAY_SIZE-1)){
+                if(teamNum < 1 || teamNum > (ARRAY_SIZE-1)){
                     //cout << "input out of range" << endl;   //testing input range
                     cout << "Please choose team number 1 through " << (ARRAY_SIZE-1)<< "." << endl;
                 }
             }else{
-                //cout << "input not valid" << endl; //testing input type
                 clearInput();
+                //cout << "input not valid" << endl; //testing input type
                 cout << "Please choose team number 1 through " << ARRAY_SIZE << "." << endl;
             }
-        }while(temp < 1 || temp > (ARRAY_SIZE-1) || !valid); // end loop for away team
+        }while(teamNum < 1 || teamNum > (ARRAY_SIZE-1) || !valid); // end loop for away team
     
         //Convert input to vector index
-        if(temp>hometeam) {    //corrects for user number one start versus vector zero start
-            awayteam = temp;
+        if(teamNum > hometeam) {    //corrects for user number one start versus vector zero start
+            awayteam = teamNum;
         }else{
-            awayteam = temp - 1; //corrects for user and vector start and then for the vector index skipped for hometeam
+            awayteam = teamNum - 1; //corrects for user and vector start and then for the vector index skipped for hometeam
         }
         //Output choice
         cout<< "You chose the " << team[awayteam].teamName << " as your awayteam."<< endl;
@@ -185,25 +177,22 @@ try
         cout << "Would you like to play again? (y/n)" << endl;
           
         // take in user input on whether they'd like to play again
-        cin >> again;
+        input = "";
+        cin >> input;
         clearInput();
-            
-        // make sure playAgain char is lower case
-        again = tolower(again);
         
         // Check input either y or n prompt input again if not
-        while(again != 'n' && again != 'N' && again != 'y' && again != 'Y'){
-            //cout << "\"" << again << "\"" << endl;
+        while(input != "n" && input != "N" && input != "y" && input != "Y"){
+            //cout << "\"" << input << "\"" << endl;
             //cout << "input not valid" << endl; //testing input
             cout << "If you would like to play again please enter 'y'. \n" <<
             "Otherwise enter 'n' to quit. " << endl;
-            cin >> again;
+            cin >> input;
             clearInput();
-            again = tolower(again);
         }
 
         // change bool flag to answer given
-        if(again == 'y'){
+        if(input == "y" || input == "Y"){
             playAgain = true;
         }else{
             playAgain = false;
@@ -237,5 +226,5 @@ void determineGameWinner(struct team home, struct team away /*,homeAdv*/){
 // function to clear input
 void clearInput(){
     cin.clear();
-    cin.ignore();
+    cin.ignore(80, '\n');
 }
