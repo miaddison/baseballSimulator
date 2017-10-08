@@ -1,7 +1,7 @@
 /* Advanced C++ Group project by
-    Merna Addison
+    Merna Addison   merna.addison@gmail.com
     Brian Burk
-    Ismael Ramirez
+    Ismael Ramirez 
     James Robbins
     
     9/5/17 - 10/17/17
@@ -9,134 +9,223 @@
     playing against each other.
 */
 
+
 #include <iostream>
+#include <fstream>
 #include <stdlib.h>
 #include <vector>
+#include <sstream>
 #include <ctime>
 using namespace std;
 
-// Prototype function
-//double determineEra ();
-void determineGameWinner (string teamName, double teama, string teamNameb, double teamb);
+// Global Variable
+const int ARRAY_SIZE = 5;  // Array size
+const int PLAYER_ARRAY = 3;
 
-//Global Variables
-vector<string>teams = {"Chicago Cubs", "Cincinnati Reds", "Milwaukee Brewers", "Pittsburgh Pirates", "St.Louis Cardinals"};    // vector with team names
-vector<double>eras = {4.08, 5.25, 4.04, 4.27, 3.86};   //vector with eras
+// Struct for team values
+struct team{
+    string teamName;
+    double teamEra;
+    double pitcherEra;
+    double playerBA [PLAYER_ARRAY];
+}team[ARRAY_SIZE];
+
+// Prototype function
+void determineGameWinner (struct team homeTeam, struct team awayTeam);
+void clearInput();
 
 int main()
-{ 
-    int temp = 0;       //temp variable to hold team choice input to be converted to vector value
-    int hometeam = 0;   //holds input for hometeam choice
-    int awayteam = 0;   //holds input for awayteam choice
-    int count = 0;      //count variable for selection of awayteam
+try
+{
+    //Input file stream objects
+    ifstream inTeamData;
     
-    // Ask the User for a hometeam 
-    cout << "Please choose your hometeam: " << endl;        
+    // Variables
+    int teamNum = 0;       //variable to hold team choice input to be converted to vector value
+    int hometeam = 0;       //holds input for hometeam choice
+    int awayteam = 0;       //holds input for awayteam choice
+    int count = 0;          //count variable for selection of awayteam
+    string input = "";      // for taking in input
+    bool valid = false;     //validates input for type
+    bool playAgain = false; // Allows user to play again
+    
+    // Open files
+    inTeamData.open("TeamData.csv");
+    
+    // Read file into struct array
+    if(inTeamData.is_open()){
+        while(inTeamData.good()){
+            for(int i = 0; i < ARRAY_SIZE; i++){
+                getline(inTeamData,input);
+                stringstream ss(input);
+                getline(ss, input, ',');
+                team[i].teamName = input;
+                getline(ss, input, ',');
+                team[i].teamEra = atof(input.c_str());
+                getline(ss, input, ',');
+                team[i].pitcherEra = atof(input.c_str());
+                for(int x = 0; x < PLAYER_ARRAY; x++){
+                    getline(ss, input, ',');
+                    team[i].playerBA[x] = atof(input.c_str());
+                }
+            }
+        }
+    }
+    // Testing for data into Team
+    /*for(int i=0; i < ARRAY_SIZE; i++){
+        cout << "Name: " << team[i].teamName << "\nTeam Era: " << team[i].teamEra
+             << "\nPitcher ERA: " << team[i].pitcherEra << "\nPlayer1 BA: " << team[i].playerBA[0] << "\nPlayer2 BA: "
+             << team[i].playerBA[1] << "\nPlayer3 BA: " << team[i].playerBA[2] << "\n-----------------------" <<endl;
+    }*/
+    
+    do{     // Main loop for game
+        do{     // Loop to select hometeam with user validation
+            
+            //Output directions
+            cout<<"Please choose your hometeam:"<<endl;
+    
+            //Output all teams
+            for(int x = 0; x<ARRAY_SIZE; x++){
+                cout<< x+1 << ". " << team[x].teamName << endl;
+            }
         
-    //Output all teams in the vector of teams  
-    for(int x = 0; x < teams.size(); x++)
-	{
-        cout<< x + 1 << ". " << teams[x] << endl;
-    }
+            // Take in input for hometeam choice and check that input is right type
+            if(cin >> teamNum){
+                cin.ignore();
+                //cout << "valid input type" << endl; //testing input type
+                // input is valid
+                valid = true;
+            
+                // Check input within correct range
+                if(teamNum < 1 || teamNum > ARRAY_SIZE){
+                    //cout << "input out of range" << endl;   // testing input range
+                    cout << "Please choose team number 1 through " << ARRAY_SIZE << "." << endl;
+                }
+            }else{
+                clearInput();
+                //cout << "input not valid" << endl; //testing input type
+                cout << "Please choose team number 1 through " << ARRAY_SIZE << "." << endl;
+            }
+        }while(teamNum < 1 || teamNum > ARRAY_SIZE || !valid); //end loop for hometeam
+        
+        // Reset valid to false so next user input can be validated for type
+        valid = false;
     
+        //Convert input to vector index
+        hometeam = teamNum - 1;
     
-    //Take input from User for hometeam
-    cin >> temp;
+        //Output choice
+        cout<< "You chose the " << team[hometeam].teamName << " as your hometeam."<< endl;
     
-    // Check if the User input is valid from the vector
-    while(temp > teams.size())
-    {
-    	cout << "Please choose a team on the list" << endl;
-    	cin >> temp;
-	}
-	
+        //testing
+        //cout << team[hometeam].teamName << team[hometeam].teamEra <<endl;
+    
+        // Loop to determine awayteam with validation
+        do{
+            //output directions for awayteam
+            cout << "Please choose your awayteam:"<<endl;
+    
+            //Output all teams skipping chosen hometeam
+            count = 0;
+            for(int x = 0; x<ARRAY_SIZE; x++){
+                if(x != hometeam){
+                    count++;
+                    cout<< count << ". " << team[x].teamName << endl;
+                }
+            }
+    
+            // Take in input for hometeam choice and check that input is right type
+            if(cin >> teamNum){
+                cin.ignore();
+                // input is valid flag true
+                valid = true;
+                //cout << "valid input type" << endl; //testing input type
+            
+                // Check input range
+                if(teamNum < 1 || teamNum > (ARRAY_SIZE-1)){
+                    //cout << "input out of range" << endl;   //testing input range
+                    cout << "Please choose team number 1 through " << (ARRAY_SIZE-1)<< "." << endl;
+                }
+            }else{
+                clearInput();
+                //cout << "input not valid" << endl; //testing input type
+                cout << "Please choose team number 1 through " << ARRAY_SIZE << "." << endl;
+            }
+        }while(teamNum < 1 || teamNum > (ARRAY_SIZE-1) || !valid); // end loop for away team
+    
+        //Convert input to vector index
+        if(teamNum > hometeam) {    //corrects for user number one start versus vector zero start
+            awayteam = teamNum;
+        }else{
+            awayteam = teamNum - 1; //corrects for user and vector start and then for the vector index skipped for hometeam
+        }
+        //Output choice
+        cout<< "You chose the " << team[awayteam].teamName << " as your awayteam."<< endl;
+    
+        //testing
+        //cout << team[awayteam].teamName << team[awayteam].teamEra <<endl;
+    
+        // Pass home and away teams into method to determine winner based on team era
+        determineGameWinner(team[hometeam], team[awayteam] /*, homeAdvantage*/);
+        
+        // determine if user would like to try again and input validation
+        cout << "Would you like to play again? (y/n)" << endl;
+          
+        // take in user input on whether they'd like to play again
+        input = "";
+        cin >> input;
+        clearInput();
+        
+        // Check input either y or n prompt input again if not
+        while(input != "n" && input != "N" && input != "y" && input != "Y"){
+            //cout << "\"" << input << "\"" << endl;
+            //cout << "input not valid" << endl; //testing input
+            cout << "If you would like to play again please enter 'y'. \n" <<
+            "Otherwise enter 'n' to quit. " << endl;
+            cin >> input;
+            clearInput();
+        }
 
-    //Convert input to vector index
-    hometeam = temp - 1;
+        // change bool flag to answer given
+        if(input == "y" || input == "Y"){
+            playAgain = true;
+        }else{
+            playAgain = false;
+        }
+    }while(playAgain == true); // end game loop
     
-    
-    //Output the choice of the User
-    cout<< "You chose the " << teams[hometeam] << " as your hometeam."<< endl;
-    
-    // Saves the Team Name to a String for later Use
-    string hometeamName = teams[hometeam];
-    
-    
-    // Saves the Team ERA to a Double for later Use
-    double hometeamERA = eras[hometeam];
-    
-    
-    // Removes BOTH! TEAM NAME and ERA from their vectors
-	teams.erase(teams.begin() + hometeam);
-	eras.erase(eras.begin() + hometeam);
-	
-//------------------^^^   ABOVE IS HOME TEAM   ^^^-----------------//	
-	
-	//output directions for awayteam
-    cout << "Please choose your awayteam:"<<endl;
-    
-    
-    //Outputs the remaining teams names from the vector
-    for(int x = 0; x < teams.size(); x++)
-	{
-        cout<< x + 1 << ". " << teams[x] << endl;
-    }
-    
-    //Take in input for awayteam choice
-    cin >> temp;
-    
-    // Check if the User input is valid
-    while(temp > (teams.size()))
-    {
-    	cout << "Please choose a team on the list" << endl;
-    	cin >> temp;
-	}
-	
-	//Convert input to vector index
-	awayteam = temp - 1;
-
-    //Output the choice of the User
-    cout<< "You chose the " << teams[awayteam] << " as your awayteam."<< endl;
-    
-    // Saves the Team Name to a String for later Use
-    string awayteamName = teams[awayteam];
-    
-    // Saves the Team ERA to a Double for later Use
-    double awayteamERA = eras[awayteam];
-    
-    
-    // Removes BOTH! TEAM NAME and ERA from their vectors
-    teams.erase(teams.begin() + awayteam);
-    eras.erase(eras.begin() + awayteam);
-    
-
-    // spacing
-    cout << endl;
-    cout << endl;
-    
-    
-    
-
-    
-    determineGameWinner(hometeamName, hometeamERA, awayteamName, awayteamERA);
     return 0;
 }
-
+catch(exception& e){
+    cerr << e.what() << '\n';
+    system("pause");
+    return 1;
+}
+catch(...){
+    cerr << "exception \n";
+    system("pause");
+    return 2;
+}
 //Function to determine the winner based on era
-void determineGameWinner(string hometeam, double hometeamERA, string awayteam, double awayteamERA)
-{
+void determineGameWinner(struct team home, struct team away /*,homeAdv*/){
+	
+	
+	// the code below gives the home team adv
 	srand((unsigned)time(0));
-	double HomeTeamADV = rand() % 100; 
-	HomeTeamADV = HomeTeamADV / 100;
-    if((hometeamERA + HomeTeamADV) > awayteamERA)
-	{
-		cout << "The " << hometeam << " win! with an era of: " << hometeamERA + HomeTeamADV << endl;
-		cout << "The " << awayteam << " Lose! with an era of: " << awayteamERA << endl;
+	double homeAdv = rand() % 10 + 1;  // picks a random number between 1 - 10
+	homeAdv = homeAdv / 100;	// after number is picked, puts it in decimal format
+	
+	
+	
+    if (home.teamEra + homeAdv < away.teamEra){
+		cout << "The " << home.teamName << " win!" << endl;
 	}
-	else 
-	{
-		cout << "The " << awayteam << " win! with an era of: " << awayteamERA << endl;
-		cout << "The " << hometeam << " Lose! with an era of: " << hometeamERA + HomeTeamADV << endl;
+	else {
+		cout << "The " << away.teamName << " win!" << endl;
 	}
 }
-
+// function to clear input
+void clearInput(){
+    cin.clear();
+    cin.ignore(80, '\n');
+}
