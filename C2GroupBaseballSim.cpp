@@ -21,18 +21,8 @@ using namespace std;
 // Global Variable
 const int ARRAY_SIZE = 5;  // Array size
 const int PLAYER_ARRAY = 3;
-
-
-
-
 double Advantage = 0;
 double HomeAdv;
-
-
-
-
-
-
 
 // Struct for team values
 struct team{
@@ -230,11 +220,9 @@ void determineGameWinner(struct team home, struct team away, double homeAdv){
 	
     if (home.teamEra + homeAdv < away.teamEra){
 		cout << "The " << home.teamName << " win!" << endl;
-		cout << "The Randon ADV is: " << homeAdv << endl;
 	}
 	else {
 		cout << "The " << away.teamName << " win!" << endl;
-		cout << "The Randon ADV is: " << homeAdv << endl;
 	}
 }
 
