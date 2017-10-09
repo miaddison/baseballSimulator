@@ -22,6 +22,18 @@ using namespace std;
 const int ARRAY_SIZE = 5;  // Array size
 const int PLAYER_ARRAY = 3;
 
+
+
+
+double Advantage = 0;
+double HomeAdv;
+
+
+
+
+
+
+
 // Struct for team values
 struct team{
     string teamName;
@@ -31,8 +43,9 @@ struct team{
 }team[ARRAY_SIZE];
 
 // Prototype function
-void determineGameWinner (struct team homeTeam, struct team awayTeam);
+void determineGameWinner (struct team homeTeam, struct team awayTeam, double HomeAdv);
 void clearInput();
+double HometeamAdv(double);
 
 int main()
 try
@@ -165,8 +178,13 @@ try
         //testing
         //cout << team[awayteam].teamName << team[awayteam].teamEra <<endl;
     
+    
+    	// Calls the funtion  of hometeam adv and returns a number between .01 - .1
+    	HomeAdv = HometeamAdv(Advantage);
+    
         // Pass home and away teams into method to determine winner based on team era
-        determineGameWinner(team[hometeam], team[awayteam] /*, homeAdvantage*/);
+        
+        determineGameWinner(team[hometeam], team[awayteam], HomeAdv);
         
         // determine if user would like to try again and input validation
         cout << "Would you like to play again? (y/n)" << endl;
@@ -207,23 +225,29 @@ catch(...){
     return 2;
 }
 //Function to determine the winner based on era
-void determineGameWinner(struct team home, struct team away /*,homeAdv*/){
-	
-	
-	// the code below gives the home team adv
-	srand((unsigned)time(0));
-	double homeAdv = rand() % 10 + 1;  // picks a random number between 1 - 10
-	homeAdv = homeAdv / 100;	// after number is picked, puts it in decimal format
-	
-	
+void determineGameWinner(struct team home, struct team away, double homeAdv){
+		
 	
     if (home.teamEra + homeAdv < away.teamEra){
 		cout << "The " << home.teamName << " win!" << endl;
+		cout << "The Randon ADV is: " << homeAdv << endl;
 	}
 	else {
 		cout << "The " << away.teamName << " win!" << endl;
+		cout << "The Randon ADV is: " << homeAdv << endl;
 	}
 }
+
+double HometeamAdv(double Adv)
+{
+	// the code below gives the home team adv
+	srand((unsigned)time(0));
+	Adv = rand() % 10 + 1;  // picks a random number between 1 - 10
+	Adv = Adv / 100;	// after number is picked, puts it in decimal format
+	
+	return Adv;
+}
+
 // function to clear input
 void clearInput(){
     cin.clear();
