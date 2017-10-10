@@ -19,7 +19,7 @@ using namespace std;
 
 // Global Variable
 const int ARRAY_SIZE = 5;  // Array size
-const int PLAYER_ARRAY = 3;
+const int PLAYER_ARRAY = 3; // Team member batting average array
 
 // Struct for team values
 struct team{
@@ -210,8 +210,8 @@ catch(...){
     return 2;
 }
 //Function to determine the winner based on era
-void determineGameWinner(struct team home, struct team away /*,homeAdv*/){
-    if (home.teamEra /*+ homeAdv*/ < away.teamEra){
+void determineGameWinner(struct team home, struct team away){
+    if ((home.teamEra + HometeamAdv()) < away.teamEra){
 		cout << "The " << home.teamName << " win!" << endl;
 	}
 	else {
@@ -223,7 +223,7 @@ double HometeamAdv(){
     // the code below gives the home team adv
     srand((unsigned)time(0));
     double Adv = rand() % 10 + 1;  // picks a random number between 1 - 10
-    Adv = Adv / 100;	// after number is picked, puts it in decimal format
+    Adv = Adv / 100;	// after number is picked, puts it in decimal format (0.01-0.10)
     
     return Adv;
 }
