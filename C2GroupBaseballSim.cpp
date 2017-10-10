@@ -19,15 +19,14 @@ using namespace std;
 
 // Global Variable
 const int ARRAY_SIZE = 5;  // Array size
+const int PLAYER_ARRAY = 3;
 
 // Struct for team values
 struct team{
     string teamName;
     double teamEra;
     double pitcherEra;
-    double player1BatAvg;
-    double player2BatAvg;
-    double player3BatAvg;
+    double playerBA [PLAYER_ARRAY];
 }team[ARRAY_SIZE];
 
 // Prototype function
@@ -59,33 +58,28 @@ try
                 getline(inTeamData,input);
                 stringstream ss(input);
                 getline(ss, input, ',');
-                //team[i].leagueName = input;
                 team[i].teamName = input;
                 getline(ss, input, ',');
                 team[i].teamEra = atof(input.c_str());
                 getline(ss, input, ',');
                 team[i].pitcherEra = atof(input.c_str());
-                getline(ss, input, ',');
-                team[i].player1BatAvg = atof(input.c_str());
-                getline(ss, input, ',');
-                team[i].player2BatAvg = atof(input.c_str());
-                getline(ss, input, ',');
-                team[i].player3BatAvg = atof(input.c_str());
+                for(int x = 0; x < PLAYER_ARRAY; x++){
+                    getline(ss, input, ',');
+                    team[i].playerBA[x] = atof(input.c_str());
+                }
             }
         }
     }
-
     // Testing for data into Team
     /*for(int i=0; i < ARRAY_SIZE; i++){
         cout << "Name: " << team[i].teamName << "\nTeam Era: " << team[i].teamEra
-             << "\nPitcher ERA: " << team[i].pitcherEra << "\nPlayer1 BA: " << team[i].player1BatAvg << "\nPlayer2 BA: "
-             << team[i].player2BatAvg << "\nPlayer3 BA: " << team[i].player3BatAvg << "\n-----------------------" <<endl;
+             << "\nPitcher ERA: " << team[i].pitcherEra << "\nPlayer1 BA: " << team[i].playerBA[0] << "\nPlayer2 BA: "
+             << team[i].playerBA[1] << "\nPlayer3 BA: " << team[i].playerBA[2] << "\n-----------------------" <<endl;
     }*/
     
-    // Main loop for game
-    do{
-        // Loop to select hometeam with user validation
-        do{
+    do{     // Main loop for game
+        do{     // Loop to select hometeam with user validation
+            
             //Output directions
             cout<<"Please choose your hometeam:"<<endl;
     
@@ -142,7 +136,7 @@ try
             // Take in input for hometeam choice and check that input is right type
             if(cin >> teamNum){
                 cin.ignore();
-                // input is valid
+                // input is valid flag true
                 valid = true;
                 //cout << "valid input type" << endl; //testing input type
             
@@ -196,7 +190,6 @@ try
             playAgain = true;
         }else{
             playAgain = false;
-            
         }
     }while(playAgain == true); // end game loop
     
@@ -212,7 +205,6 @@ catch(...){
     system("pause");
     return 2;
 }
-
 //Function to determine the winner based on era
 void determineGameWinner(struct team home, struct team away /*,homeAdv*/){
     if (home.teamEra /*+ homeAdv*/ < away.teamEra){
@@ -222,7 +214,6 @@ void determineGameWinner(struct team home, struct team away /*,homeAdv*/){
 		cout << "The " << away.teamName << " win!" << endl;
 	}
 }
-  
 // function to clear input
 void clearInput(){
     cin.clear();
