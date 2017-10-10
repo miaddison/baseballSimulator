@@ -32,6 +32,7 @@ struct team{
 // Prototype function
 void determineGameWinner (struct team homeTeam, struct team awayTeam);
 void clearInput();
+double HometeamAdv();
 
 int main()
 try
@@ -167,6 +168,9 @@ try
         // Pass home and away teams into method to determine winner based on team era
         determineGameWinner(team[hometeam], team[awayteam] /*, homeAdvantage*/);
         
+        // Call Hometeam advantage for testing that output is between 0.01 and 0.10
+        //cout << HometeamAdv() << endl;
+            
         // determine if user would like to try again and input validation
         cout << "Would you like to play again? (y/n)" << endl;
           
@@ -213,6 +217,15 @@ void determineGameWinner(struct team home, struct team away /*,homeAdv*/){
 	else {
 		cout << "The " << away.teamName << " win!" << endl;
 	}
+}
+//Fuction to determine hometeam advantage between 1-10%
+double HometeamAdv(){
+    // the code below gives the home team adv
+    srand((unsigned)time(0));
+    double Adv = rand() % 10 + 1;  // picks a random number between 1 - 10
+    Adv = Adv / 100;	// after number is picked, puts it in decimal format
+    
+    return Adv;
 }
 // function to clear input
 void clearInput(){
