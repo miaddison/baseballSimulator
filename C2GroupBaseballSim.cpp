@@ -15,6 +15,7 @@
 #include <stdlib.h>
 #include <vector>
 #include <sstream>
+#include <ctime>
 using namespace std;
 
 // Global Variable
@@ -169,7 +170,7 @@ try
         determineGameWinner(team[hometeam], team[awayteam] /*, homeAdvantage*/);
         
         // Call Hometeam advantage for testing that output is between 0.01 and 0.10
-        //cout << HometeamAdv() << endl;
+        cout << HometeamAdv() << endl;
             
         // determine if user would like to try again and input validation
         cout << "Would you like to play again? (y/n)" << endl;
