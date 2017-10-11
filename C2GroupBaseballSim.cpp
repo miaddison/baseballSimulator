@@ -15,6 +15,7 @@
 #include <stdlib.h>
 #include <vector>
 #include <sstream>
+#include <ctime>
 using namespace std;
 
 // Global Variable
