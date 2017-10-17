@@ -208,21 +208,34 @@ catch(...){
     system("pause");
     return 2;
 }
-//Function to determine the winner based on era
+//Function to determine the winner of a baseball game based on pitcher ERA and player batting averages
 void determineGameWinner(struct team home, struct team away, int gameArray[], int gameSize){
-	int scoreCount = 0;
+	int homeScore = 0;
+	int awayScore = 0;
 	for (int x = 0; x < gameSize; x++){
 		gameArray[x] = inning(atBat(home.pitcherEra, away.playerBA[0]), atBat(home.pitcherEra, away.playerBA[1]), atBat(home.pitcherEra, away.playerBA[2]));
 		if (gameArray[x] == 1){
-			scoreCount++;
+			homeScore++;
 		}
 	}
-	if (scoreCount > 4){
+	for (int x = 0; x < gameSize; x++){
+		gameArray[x] = inning(atBat(away.pitcherEra, away.playerBA[0]), atBat(away.pitcherEra, home.playerBA[1]), atBat(away.pitcherEra, home.playerBA[2]));
+		if (gameArray[x] == 1){
+			awayScore++;
+		}
+	}
+	if (homeScore > awayScore){
+		cout << "Home team " << home.teamName << " wins!" << endl;
+	}
+	else{
+		cout << "Away team " << away.teamName << " wins!" << endl;
+	}
+	/*if (scoreCount > 4){
 		cout << "The home team: " << home.teamName << " wins!" << endl;
 	}
 	else{
 		cout << "The away team: " << away.teamName << " wins!" << endl;
-	}
+	}*/
 }
 //Fuction to determine hometeam advantage between 1-10%
 double HometeamAdv(){
