@@ -5,12 +5,12 @@
  James Robbins
  
  9/5/17 - 10/17/17
-     This program will create a simulated baseball game predicting the outcome of two selected teams
-     playing against each other.This program reads in data from a csv file to an array of structs.
-     This program utilizes input validation on all inputs. Then determines the potential outcome of
-     the two teams at bat for each inning and then uses that information to determine the potential
-     winner of the game. Hometeam advantage is also factored in and is determined by a random percentage
-     of up to 10%.
+ This program will create a simulated baseball game predicting the outcome of two selected teams
+ playing against each other.This program reads in data from a csv file to an array of structs.
+ This program utilizes input validation on all inputs. Then determines the potential outcome of
+ the two teams at bat for each inning and then uses that information to determine the potential
+ winner of the game. Hometeam advantage is also factored in and is determined by a random percentage
+ of up to 10%.
  */
 
 
@@ -118,7 +118,7 @@ try
             hometeam = teamNum - 1;
             
             //Output choice
-            cout<< "You chose the " << team[hometeam].teamName << " as your hometeam."<< endl;
+            cout<< "You chose the " << team[hometeam].teamName << " as your hometeam.\n"<< endl;
             
             //testing
             //cout << team[hometeam].teamName << team[hometeam].teamEra <<endl;
@@ -163,7 +163,7 @@ try
                 awayteam = teamNum - 1; //corrects for user and vector start and then for the vector index skipped for hometeam
             }
             //Output choice
-            cout<< "You chose the " << team[awayteam].teamName << " as your awayteam."<< endl;
+            cout<< "You chose the " << team[awayteam].teamName << " as your awayteam.\n"<< endl;
             
             //testing
             //cout << team[awayteam].teamName << team[awayteam].teamEra <<endl;
@@ -175,7 +175,7 @@ try
             //cout << HometeamAdv() << endl;
             
             // determine if user would like to try again and input validation
-            cout << "Would you like to play again? (y/n)" << endl;
+            cout << "\nWould you like to play again? (y/n)" << endl;
             
             // take in user input on whether they'd like to play again
             input = "";
@@ -233,21 +233,21 @@ try
                     }
                 }
                 /*for (int x = 0; x < gameSize; x++){
-                    gameArray[x] = inning(atBat(away.pitcherEra, away.playerBA[0]), atBat(away.pitcherEra, home.playerBA[1]), atBat(away.pitcherEra, home.playerBA[2]));
-                    if (gameArray[x] == 1){
-                        awayScore++;
-                    }
-                }*/
+                 gameArray[x] = inning(atBat(away.pitcherEra, away.playerBA[0]), atBat(away.pitcherEra, home.playerBA[1]), atBat(away.pitcherEra, home.playerBA[2]));
+                 if (gameArray[x] == 1){
+                 awayScore++;
+                 }
+                 }*/
                 if (homeScore > awayScore){
-                    cout << "Home team " << home.teamName << " wins!" << endl;
+                    cout << "\nHome team " << home.teamName << " wins!" << endl;
                 }
                 else{
-                    cout << "Away team " << away.teamName << " wins!" << endl;
+                    cout << "\nAway team " << away.teamName << " wins!" << endl;
                 }
-                cout << "     Score     " << endl;
-                cout << "---------------" << endl;
-                cout << home.teamName << ": " << homeScore << endl;
-                cout << away.teamName << ": " << awayScore << endl;
+                //cout << "     Score     " << endl;
+                //cout << "---------------" << endl;
+                //cout << home.teamName << ": " << homeScore << endl;
+                //cout << away.teamName << ": " << awayScore << endl;
                 /*if (scoreCount > 4){
                  cout << "The home team: " << home.teamName << " wins!" << endl;
                  }
@@ -294,4 +294,3 @@ try
                 cin.clear();
                 cin.ignore(80, '\n');
             }
-
