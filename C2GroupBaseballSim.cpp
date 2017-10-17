@@ -212,24 +212,38 @@ try
             void determineGameWinner(struct team home, struct team away, int gameArray[], int gameSize){
                 int homeScore = 0;
                 int awayScore = 0;
+                int gameArray2[9];
                 for (int x = 0; x < gameSize; x++){
+                    cout << "\nInning Number: " << x +1 << endl;
+                    cout << "\nAway team at bat" << endl;
+                    cout << "----------------" << endl;
                     gameArray[x] = inning(atBat(home.pitcherEra, away.playerBA[0]), atBat(home.pitcherEra, away.playerBA[1]), atBat(home.pitcherEra, away.playerBA[2]));
                     if (gameArray[x] == 1){
                         homeScore++;
                     }
+                    cout << "\nHome team at bat"<< endl;
+                    cout << "----------------" << endl;
+                    gameArray2[x] = inning(atBat(away.pitcherEra, away.playerBA[0]), atBat(away.pitcherEra, home.playerBA[1]), atBat(away.pitcherEra, home.playerBA[2]));
+                    if (gameArray2[x] == 1){
+                        awayScore++;
+                    }
                 }
-                for (int x = 0; x < gameSize; x++){
+                /*for (int x = 0; x < gameSize; x++){
                     gameArray[x] = inning(atBat(away.pitcherEra, away.playerBA[0]), atBat(away.pitcherEra, home.playerBA[1]), atBat(away.pitcherEra, home.playerBA[2]));
                     if (gameArray[x] == 1){
                         awayScore++;
                     }
-                }
+                }*/
                 if (homeScore > awayScore){
                     cout << "Home team " << home.teamName << " wins!" << endl;
                 }
                 else{
                     cout << "Away team " << away.teamName << " wins!" << endl;
                 }
+                cout << "     Score     " << endl;
+                cout << "---------------" << endl;
+                cout << home.teamName << ": " << homeScore << endl;
+                cout << away.teamName << ": " << awayScore << endl;
                 /*if (scoreCount > 4){
                  cout << "The home team: " << home.teamName << " wins!" << endl;
                  }
