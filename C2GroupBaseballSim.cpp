@@ -5,8 +5,12 @@
  James Robbins
  
  9/5/17 - 10/17/17
- This program will create a simulated baseball game predicting the outcome of two selected teams
- playing against each other.
+     This program will create a simulated baseball game predicting the outcome of two selected teams
+     playing against each other.This program reads in data from a csv file to an array of structs.
+     This program utilizes input validation on all inputs. Then determines the potential outcome of
+     the two teams at bat for each inning and then uses that information to determine the potential
+     winner of the game. Hometeam advantage is also factored in and is determined by a random percentage
+     of up to 10%.
  */
 
 
